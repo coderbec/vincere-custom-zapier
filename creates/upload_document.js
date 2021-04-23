@@ -1,32 +1,23 @@
 const http = require('https'); // require('http') if your URL is not https
 
-const FormData = require('form-data');
+function converToLocalTime() {
+  var dateStr = new Date();
+  // dateStr = dateStr.toISOString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); // this will return as just the server date format i.e., yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+  dateStr = dateStr.toISOString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+  return dateStr;
+}
 
-// Getting a stream directly from http. This only works on core 10+. For core
-// 9.x compatible code, see uploadFile_v9.js.
-const makeDownloadStream = (url) =>
-  new Promise((resolve, reject) => {
-    http.request(url, resolve).on('error', reject).end();
-  });
 
 const perform = async (z, bundle) => {
-  const form = new FormData();
-
-  form.append('filename', bundle.inputData.filename);
-
-  // bundle.inputData.file will in fact be an URL where the file data can be
-  // downloaded from which we do via a stream
-  const stream = await makeDownloadStream(bundle.inputData.file, z);
-  form.append('file', stream);
-
   const response = await z.request({
     url: 'https://{{bundle.authData.subdomain}}/api/v2/candidate/{{bundle.inputData.id}}/file',
     method: 'POST',
     body: {
-        "file_name": bundle.inputData.file_name,
-        "document_type_id": bundle.inputData.document_type_id,
-        "url": bundle.inputData.url,
-        "original_cv": false
+      "file_name": bundle.inputData.file_name,
+      "document_type_id": bundle.inputData.document_type_id,
+//      "url": bundle.inputData.url,
+      "base_64_content": bundle.inputData.base_64_content,
+      "original_cv": bundle.inputData.original_cv
       },  
     headers: {
         'id-token': '{{bundle.authData.id_token}}',
@@ -34,36 +25,39 @@ const perform = async (z, bundle) => {
         'x-api-key': '{{process.env.CLIENT_SECRET}}',
     },
   });
-
   return response.json;
 };
 
 module.exports = {
-  key: 'uploadFile_v10',
-  noun: 'File',
+  key: 'new_candidate_document',
+  noun: 'Document',
   display: {
-    label: 'Upload File v10',
-    description: 'Uploads a file. Only works on zapier-platform-core v10+.',
+    label: 'Upload Candidate Document/CV',
+    description: 'Adds a new candidate document.',
   },
   operation: {
     inputFields: [
       { key: 'id', required: true, type: 'string', label: 'Candidate ID' },
-      { key: 'file_name', required: true, type: 'string', label: 'Name of the document' },
+      { key: 'file_name', required: true, type: 'string', label: 'File Name' },
       {
         key: 'document_type_id',
-        required: true,
+        required: false,
         label: 'ID of the document type in vincere',
-        dynamic: 'document.value.description'
+        dynamic: 'document.value_search.description'
       },
-      { key: 'url', required: false, type: 'string', label: 'Url where the document is stored' },
-      { key: 'base_64_content', required: false, type: 'string', label: 'Content of the document encoded with base64 encoding' },
-      { key: 'original_cv', required: false, type: 'boolean', label: 'if true, this new document will be set as original CV' },
+      { key: 'base_64_content', required: true, type: 'string', label: 'Document' },
+      {
+        key: 'original_cv',
+        label: 'Register this as the candidate\'s original VC', 
+        required: true,
+        choices: { true: 'true', false: 'false' },
+      }
     ],
     perform,
     sample: {
-      file_name: 'example.pdf',
-      document_type_id: 1,
-      url: 'SAMPLE FILE'      
+      id: 1,
+      title: 'Sample Title',
+      content: 'Sample note.'      
     },
   },
 };

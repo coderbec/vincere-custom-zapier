@@ -7,6 +7,10 @@
 
 ## Actions
 
+get applications by candidate id
+get company location by id
+
+
 # In Vincere native app
 
 ## Triggers

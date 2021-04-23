@@ -2,11 +2,19 @@ const authentication = require('./authentication');
 const updateCandidateCreate = require('./creates/update_candidate.js');
 const fetchCandidateCreate = require('./creates/fetch_candidate.js');
 const uploadDocumentCreate = require('./creates/upload_document.js');
-const candidateNoteCreate = require('./creates/new_candidate_note.js');
+const candidateApplicationCreate = require('./creates/new_application.js');
+const candidateGetApplications = require('./creates/candidate_applications.js');
+const candidateFromCV = require('./creates/new_candidate_from_cv.js');
+const getCandidateDocuments = require('./creates/fetch_candidate_documents.js');
+const putCandidateLocation = require('./creates/put_candidate_location.js');
+const getCompanyLocation = require('./creates/get_company_location.js');
+const postCandidateNote = require('./creates/post_candidate_note.js');
 
 const documentTypeTrigger = require('./triggers/candidate_document_types.js');
 const candidateSourceTrigger = require('./triggers/candidate_source_types.js');
 const newJobTrigger = require('./triggers/new_jobs_trigger.js');
+
+
 
 const CandidateSearch = require('./searches/candidate_search.js');
 const CandidateCreate = require('./creates/new_candidate.js');
@@ -54,8 +62,14 @@ const App = {
     [updateCandidateCreate.key]: updateCandidateCreate,
     [fetchCandidateCreate.key]: fetchCandidateCreate,
     [uploadDocumentCreate.key]: uploadDocumentCreate,
-    [candidateNoteCreate.key]: candidateNoteCreate,
     [CandidateCreate.key]: CandidateCreate,
+    [candidateApplicationCreate.key]: candidateApplicationCreate,
+    [candidateGetApplications.key]: candidateGetApplications,
+    [candidateFromCV.key]: candidateFromCV,
+    [getCandidateDocuments.key]: getCandidateDocuments,
+    [putCandidateLocation.key]: putCandidateLocation,
+    [getCompanyLocation.key]: getCompanyLocation,
+    [postCandidateNote.key]: postCandidateNote
   },
 
   searchOrCreates: {
