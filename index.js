@@ -1,6 +1,7 @@
 const authentication = require('./authentication');
 const updateCandidateCreate = require('./creates/update_candidate.js');
 const fetchCandidateCreate = require('./creates/fetch_candidate.js');
+const fetchUserCreate = require('./creates/fetch_user.js');
 const uploadDocumentCreate = require('./creates/upload_document.js');
 const candidateApplicationCreate = require('./creates/new_application.js');
 const candidateGetApplications = require('./creates/candidate_applications.js');
@@ -9,25 +10,16 @@ const getCandidateDocuments = require('./creates/fetch_candidate_documents.js');
 const putCandidateLocation = require('./creates/put_candidate_location.js');
 const getCompanyLocation = require('./creates/get_company_location.js');
 const postCandidateNote = require('./creates/post_candidate_note.js');
+const postCandidateTalentPool = require('./creates/post_candidate_talent_pool.js');
 
 const documentTypeTrigger = require('./triggers/candidate_document_types.js');
 const candidateSourceTrigger = require('./triggers/candidate_source_types.js');
 const newJobTrigger = require('./triggers/new_jobs_trigger.js');
-
-
+const talentPoolTrigger = require('./triggers/user_talent_pools.js');
 
 const CandidateSearch = require('./searches/candidate_search.js');
 const CandidateCreate = require('./creates/new_candidate.js');
 
-module.exports = {
-  version: require('./package.json').version,
-  platformVersion: require('zapier-platform-core').version,
-  authentication: authentication,
-  creates: {
-    [updateCandidateCreate.key]: updateCandidateCreate,
-    [fetchCandidateCreate.key]: fetchCandidateCreate,
-  },
-};
 
 const App = {
   // This is just shorthand to reference the installed dependencies you have. Zapier will
@@ -52,6 +44,7 @@ const App = {
     [documentTypeTrigger.key]: documentTypeTrigger,
     [newJobTrigger.key]: newJobTrigger,
     [candidateSourceTrigger.key]: candidateSourceTrigger,
+    [talentPoolTrigger.key]: talentPoolTrigger,
   },
 
   // If you want your searches to show up, you better include it here!
@@ -61,6 +54,7 @@ const App = {
   creates: {
     [updateCandidateCreate.key]: updateCandidateCreate,
     [fetchCandidateCreate.key]: fetchCandidateCreate,
+    [fetchUserCreate.key]: fetchUserCreate,
     [uploadDocumentCreate.key]: uploadDocumentCreate,
     [CandidateCreate.key]: CandidateCreate,
     [candidateApplicationCreate.key]: candidateApplicationCreate,
@@ -69,7 +63,8 @@ const App = {
     [getCandidateDocuments.key]: getCandidateDocuments,
     [putCandidateLocation.key]: putCandidateLocation,
     [getCompanyLocation.key]: getCompanyLocation,
-    [postCandidateNote.key]: postCandidateNote
+    [postCandidateNote.key]: postCandidateNote,
+    [postCandidateTalentPool.key]: postCandidateTalentPool
   },
 
   searchOrCreates: {
