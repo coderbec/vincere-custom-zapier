@@ -1,7 +1,7 @@
 // find a particular recipe by name
 const searchCandidate = async (z, bundle) => {
     const request = z.request({
-      url: 'https://{{bundle.authData.subdomain}}/api/v2/candidate/search/fl=id,name,created_date,industry,current_city,current_location;sort=created_date desc?q=candidate_source_id:29134#',
+      url: 'https://{{bundle.authData.subdomain}}/api/v2/candidate/search/fl=id,name,created_date,industry,current_city,current_location;sort=created_date desc?q=primary_email:{{bundle.inputData.email}}#',
       headers: {
         'id-token': '{{bundle.authData.id_token}}',
         'Content-Type': 'application/json',
@@ -34,13 +34,7 @@ const searchCandidate = async (z, bundle) => {
   
     operation: {
       inputFields: [
-        {key: 'name', required: false, helpText: 'Find the Candidate with this name.'},
-        {
-            key: 'candidate_source_id',
-            required: false,
-            label: 'ID of the candidate source in vincere',
-            dynamic: 'source.value_search.description'
-          }
+        {key: 'email', required: false, helpText: 'Main email of the candidate.'}
       ],
       perform: searchCandidate,
   

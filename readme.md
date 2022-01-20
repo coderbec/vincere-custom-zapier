@@ -10,6 +10,10 @@
 get applications by candidate id
 get company location by id
 
+Add new talent pool for candidate
+Create new Candidate
+
+
 
 # In Vincere native app
 
