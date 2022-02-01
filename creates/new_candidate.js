@@ -1,5 +1,12 @@
 const http = require('https'); // require('http') if your URL is not https
 
+function converToLocalTime(date) {
+  var dateStr = new Date(date);
+  // dateStr = dateStr.toISOString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); // this will return as just the server date format i.e., yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+  dateStr = dateStr.toISOString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+  return dateStr;
+}
+
 function converToLocalTime() {
   var dateStr = new Date();
   // dateStr = dateStr.toISOString("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); // this will return as just the server date format i.e., yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
@@ -17,7 +24,9 @@ const perform = async (z, bundle) => {
       "email": bundle.inputData.email,
       "first_name": bundle.inputData.first_name,
       "last_name": bundle.inputData.last_name,
-      "registration_date": converToLocalTime()
+      "phone": bundle.inputData.phone,
+      "registration_date": converToLocalTime(),
+      "date_of_birth": converToLocalTime(bundle.inputData.date_of_birth)
       },  
     headers: {
         'id-token': '{{bundle.authData.id_token}}',
@@ -45,7 +54,9 @@ module.exports = {
         dynamic: 'source.value_search.description'
       },
       { key: 'first_name', required: true, type: 'string', label: 'First Name' },
-      { key: 'last_name', required: false, type: 'string', label: 'Last Name' }
+      { key: 'last_name', required: false, type: 'string', label: 'Last Name' },
+      { key: 'phone', required: false, type: 'string', label: 'Primary Phone' },
+      { key: 'date_of_birth', required: false, type: 'string', label: 'Date of Birth' },
     ],
     perform,
     sample: {

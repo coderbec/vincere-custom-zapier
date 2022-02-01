@@ -1,6 +1,6 @@
 {
   "name": "vincere-new",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "My custom app for the vincere API",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "npm": ">=5.6.0"
   },
   "dependencies": {
-    "zapier-platform-core": "9.4.0"
+    "zapier-platform-core": "11.2.0"
   },
   "devDependencies": {
     "mocha": "^5.2.0",
