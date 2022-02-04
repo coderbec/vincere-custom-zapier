@@ -13,7 +13,7 @@ get company location by id
 Add new talent pool for candidate
 Create new Candidate
 
-# TODO - severla more working actions to add here
+# TODO - several more working actions to add here
 
 This supplements the vincere native app which provides additional triggers etc.
 
